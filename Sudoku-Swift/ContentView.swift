@@ -10,6 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         let groupBorder = 3.0
+        let innerBorder = 1.5
+        let cellSize = 120.0
+        
         let bgColors = [
             Color.red, Color.orange, Color.yellow,
             Color.green, Color.blue, Color.purple,
@@ -20,14 +23,23 @@ struct ContentView: View {
             ForEach(0..<3) { groupRow in
                 GridRow {
                     ForEach(0..<3) { groupCol in
-                        Rectangle()
-                            .frame(width:100, height: 100)
-                            .foregroundColor(bgColors[groupRow * 3 + groupCol])
+                        Grid(horizontalSpacing: innerBorder, verticalSpacing: innerBorder) {
+                            ForEach(0..<3) { innerRow in
+                                GridRow {
+                                    ForEach(0..<3) { innerCol in
+                                        Rectangle()
+                                    }
+                                }
+                            }
+                        }
+                        .frame(width:cellSize, height: cellSize)
+                        .foregroundColor(bgColors[groupRow * 3 + groupCol])
                     }
                 }
             }
         }
-        .padding()
+        .padding(groupBorder * 2)
+        .background(Color.black)
     }
 }
 
